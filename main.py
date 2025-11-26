@@ -1,6 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Date, Time, ForeignKey, text, bindparam
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-from datetime import datetime, date, time
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 
 # ============================================================
 # 1. DATABASE CONNECTION CONFIGURATION
@@ -15,126 +14,9 @@ engine = create_engine(DATABASE_URL, echo=False)
 # Create session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for declarative models
-Base = declarative_base()
-
 
 # ============================================================
-# 2. ORM MODELS (MATCHING THE GIVEN SCHEMA)
-# ============================================================
-# NOTE: Tables are already created in pgAdmin. These models are defined
-# for reference/documentation purposes only. We do NOT create tables here.
-# All queries use textual SQL, not ORM operations.
-
-class User(Base):
-    """USER table model"""
-    __tablename__ = 'users'
-    
-    user_id = Column(Integer, primary_key=True)
-    email = Column(String, unique=True, nullable=False)
-    given_name = Column(String, nullable=False)
-    surname = Column(String, nullable=False)
-    city = Column(String)
-    phone_number = Column(String)
-    profile_description = Column(String)
-    password = Column(String, nullable=False)
-    
-    # Relationships
-    caregiver = relationship("Caregiver", back_populates="user", uselist=False)
-    member = relationship("Member", back_populates="user", uselist=False)
-
-
-class Caregiver(Base):
-    """CAREGIVER table model"""
-    __tablename__ = 'caregiver'
-    
-    caregiver_user_id = Column(Integer, ForeignKey('users.user_id'), primary_key=True)
-    photo = Column(String)
-    gender = Column(String)
-    caregiving_type = Column(String, nullable=False)  # babysitter, elderly care, playmate
-    hourly_rate = Column(Float, nullable=False)
-    
-    # Relationships
-    user = relationship("User", back_populates="caregiver")
-    job_applications = relationship("JobApplication", back_populates="caregiver")
-    appointments = relationship("Appointment", back_populates="caregiver")
-
-
-class Member(Base):
-    """MEMBER table model"""
-    __tablename__ = 'member'
-    
-    member_user_id = Column(Integer, ForeignKey('users.user_id'), primary_key=True)
-    house_rules = Column(String)
-    dependent_description = Column(String)
-    
-    # Relationships
-    user = relationship("User", back_populates="member")
-    address = relationship("Address", back_populates="member", uselist=False)
-    jobs = relationship("Job", back_populates="member")
-    appointments = relationship("Appointment", back_populates="member")
-
-
-class Address(Base):
-    """ADDRESS table model"""
-    __tablename__ = 'address'
-    
-    member_user_id = Column(Integer, ForeignKey('member.member_user_id'), primary_key=True)
-    house_number = Column(String)
-    street = Column(String)
-    town = Column(String)
-    
-    # Relationships
-    member = relationship("Member", back_populates="address")
-
-
-class Job(Base):
-    """JOB table model"""
-    __tablename__ = 'job'
-    
-    job_id = Column(Integer, primary_key=True)
-    member_user_id = Column(Integer, ForeignKey('member.member_user_id'), nullable=False)
-    required_caregiving_type = Column(String, nullable=False)
-    other_requirements = Column(String)
-    date_posted = Column(Date)
-    
-    # Relationships
-    member = relationship("Member", back_populates="jobs")
-    job_applications = relationship("JobApplication", back_populates="job")
-
-
-class JobApplication(Base):
-    """JOB_APPLICATION table model"""
-    __tablename__ = 'job_application'
-    
-    caregiver_user_id = Column(Integer, ForeignKey('caregiver.caregiver_user_id'), primary_key=True)
-    job_id = Column(Integer, ForeignKey('job.job_id'), primary_key=True)
-    date_applied = Column(Date)
-    
-    # Relationships
-    caregiver = relationship("Caregiver", back_populates="job_applications")
-    job = relationship("Job", back_populates="job_applications")
-
-
-class Appointment(Base):
-    """APPOINTMENT table model"""
-    __tablename__ = 'appointment'
-    
-    appointment_id = Column(Integer, primary_key=True)
-    caregiver_user_id = Column(Integer, ForeignKey('caregiver.caregiver_user_id'), nullable=False)
-    member_user_id = Column(Integer, ForeignKey('member.member_user_id'), nullable=False)
-    appointment_date = Column(Date, nullable=False)
-    appointment_time = Column(Time, nullable=False)
-    work_hours = Column(Float, nullable=False)
-    status = Column(String, nullable=False)  # 'pending', 'accepted', 'declined'
-    
-    # Relationships
-    caregiver = relationship("Caregiver", back_populates="appointments")
-    member = relationship("Member", back_populates="appointments")
-
-
-# ============================================================
-# 3. SQL OPERATIONS IMPLEMENTATION
+# 2. SQL OPERATIONS IMPLEMENTATION
 # ============================================================
 
 def print_separator(title):
