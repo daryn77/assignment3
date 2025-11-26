@@ -1,12 +1,3 @@
-"""
-CSCI 341 - Database Management Systems
-Assignment 3 - Part 2
-Online Caregivers Platform - SQL Queries Implementation
-
-This script connects to a PostgreSQL database and executes all required
-SQL operations using SQLAlchemy.
-"""
-
 from sqlalchemy import create_engine, Column, Integer, String, Float, Date, Time, ForeignKey, text, bindparam
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from datetime import datetime, date, time
@@ -590,11 +581,5 @@ def main():
 
 
 if __name__ == "__main__":
-    print("\n" + "="*80)
-    print("  CSCI 341 - Assignment 3 Part 2")
-    print("  Online Caregivers Platform - SQL Queries")
-    print("="*80)
-    print("\n⚠️  IMPORTANT: Please update the DATABASE_URL at the top of this file if needed\n")
-    
     main()
 
