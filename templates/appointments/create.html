@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Create Appointment - Caregiver Platform{% endblock %}
+
+{% block content %}
+<h2>Create New Appointment</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>Caregiver *</label>
+        <select name="caregiver_user_id" required>
+            <option value="">Select a caregiver</option>
+            {% for cg in caregivers %}
+            <option value="{{ cg.caregiver_user_id }}">{{ cg.caregiver_user_id }} - {{ cg.given_name }} {{ cg.surname }} ({{ cg.email }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Member *</label>
+        <select name="member_user_id" required>
+            <option value="">Select a member</option>
+            {% for member in members %}
+            <option value="{{ member.member_user_id }}">{{ member.member_user_id }} - {{ member.given_name }} {{ member.surname }} ({{ member.email }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Appointment Date *</label>
+        <input type="date" name="appointment_date" required>
+    </div>
+    <div class="form-group">
+        <label>Appointment Time *</label>
+        <input type="time" name="appointment_time" required>
+    </div>
+    <div class="form-group">
+        <label>Work Hours *</label>
+        <input type="number" name="work_hours" step="0.5" min="0" required>
+    </div>
+    <div class="form-group">
+        <label>Status *</label>
+        <select name="status" required>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="declined">Declined</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('appointments_list') }}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

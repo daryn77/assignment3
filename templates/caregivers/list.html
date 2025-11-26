@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Caregivers - Caregiver Platform{% endblock %}
+{% block header %}Caregivers{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('caregivers_create') }}" class="btn btn-success">Create New Caregiver</a>
+
+<div class="table-container">
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Type</th>
+            <th>Hourly Rate</th>
+            <th>Gender</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cg in caregivers %}
+        <tr>
+            <td>{{ cg.caregiver_user_id }}</td>
+            <td>{{ cg.given_name }} {{ cg.surname }}</td>
+            <td>{{ cg.email }}</td>
+            <td>{{ cg.city or '-' }}</td>
+            <td>{{ cg.caregiving_type }}</td>
+            <td>${{ "%.2f"|format(cg.hourly_rate) }}</td>
+            <td>{{ cg.gender or '-' }}</td>
+            <td>
+                <a href="{{ url_for('caregivers_update', caregiver_user_id=cg.caregiver_user_id) }}" class="btn">Update</a>
+                <form method="POST" action="{{ url_for('caregivers_delete', caregiver_user_id=cg.caregiver_user_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+

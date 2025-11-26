@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Update Caregiver - Caregiver Platform{% endblock %}
+
+{% block content %}
+<div class="form-container">
+<h2 style="font-family: 'Poppins', sans-serif; color: #2c3e50; margin-bottom: 20px;">Update Caregiver ({{ caregiver.given_name }} {{ caregiver.surname }})</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>Photo URL</label>
+        <input type="text" name="photo" value="{{ caregiver.photo or '' }}">
+    </div>
+    <div class="form-group">
+        <label>Gender</label>
+        <select name="gender">
+            <option value="">Select gender</option>
+            <option value="Male" {% if caregiver.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if caregiver.gender == 'Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if caregiver.gender == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Caregiving Type *</label>
+        <select name="caregiving_type" required>
+            <option value="babysitter" {% if caregiver.caregiving_type == 'babysitter' %}selected{% endif %}>Babysitter</option>
+            <option value="Elderly Care" {% if caregiver.caregiving_type == 'Elderly Care' %}selected{% endif %}>Elderly Care</option>
+            <option value="playmate" {% if caregiver.caregiving_type == 'playmate' %}selected{% endif %}>Playmate for Children</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Hourly Rate ($) *</label>
+        <input type="number" name="hourly_rate" step="0.01" min="0" value="{{ caregiver.hourly_rate }}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="{{ url_for('caregivers_list') }}" class="btn">Cancel</a>
+</form>
+</div>
+{% endblock %}
+

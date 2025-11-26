@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments - Caregiver Platform{% endblock %}
+{% block header %}Appointments{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('appointments_create') }}" class="btn btn-success">Create New Appointment</a>
+
+<div class="table-container">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Caregiver</th>
+            <th>Member</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for apt in appointments %}
+        <tr>
+            <td>{{ apt.appointment_id }}</td>
+            <td>{{ apt.caregiver_name }}</td>
+            <td>{{ apt.member_name }}</td>
+            <td>{{ apt.appointment_date }}</td>
+            <td>{{ apt.appointment_time }}</td>
+            <td>{{ apt.work_hours }}</td>
+            <td>{{ apt.status }}</td>
+            <td>
+                <a href="{{ url_for('appointments_update', appointment_id=apt.appointment_id) }}" class="btn">Update</a>
+                <form method="POST" action="{{ url_for('appointments_delete', appointment_id=apt.appointment_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+

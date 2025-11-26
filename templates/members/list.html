@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Members - Caregiver Platform{% endblock %}
+{% block header %}Members{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('members_create') }}" class="btn btn-success">Create New Member</a>
+
+<div class="table-container">
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Phone</th>
+            <th>House Rules</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.member_user_id }}</td>
+            <td>{{ member.given_name }} {{ member.surname }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.city or '-' }}</td>
+            <td>{{ member.phone_number or '-' }}</td>
+            <td>{{ (member.house_rules[:50] + '...') if member.house_rules and member.house_rules|length > 50 else (member.house_rules or '-') }}</td>
+            <td>
+                <a href="{{ url_for('members_update', member_user_id=member.member_user_id) }}" class="btn">Update</a>
+                <form method="POST" action="{{ url_for('members_delete', member_user_id=member.member_user_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+

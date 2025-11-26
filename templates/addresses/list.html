@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Addresses - Caregiver Platform{% endblock %}
+{% block header %}Addresses{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('addresses_create') }}" class="btn btn-success">Create New Address</a>
+
+<div class="table-container">
+<table>
+    <thead>
+        <tr>
+            <th>Member ID</th>
+            <th>Member Name</th>
+            <th>House Number</th>
+            <th>Street</th>
+            <th>Town</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for addr in addresses %}
+        <tr>
+            <td>{{ addr.member_user_id }}</td>
+            <td>{{ addr.given_name }} {{ addr.surname }}</td>
+            <td>{{ addr.house_number or '-' }}</td>
+            <td>{{ addr.street or '-' }}</td>
+            <td>{{ addr.town or '-' }}</td>
+            <td>
+                <a href="{{ url_for('addresses_update', member_user_id=addr.member_user_id) }}" class="btn">Update</a>
+                <form method="POST" action="{{ url_for('addresses_delete', member_user_id=addr.member_user_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+

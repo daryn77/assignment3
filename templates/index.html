@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Caregiver Platform{% endblock %}
+{% block header %}Dashboard{% endblock %}
+
+{% block content %}
+<p style="color: #7f8c8d; font-size: 16px; margin-bottom: 30px;">Select a table to manage:</p>
+
+<div class="home-grid">
+    <a href="{{ url_for('users_list') }}" class="home-card">
+        <h3>Users</h3>
+        <p>Manage user accounts</p>
+    </a>
+    
+    <a href="{{ url_for('caregivers_list') }}" class="home-card">
+        <h3>Caregivers</h3>
+        <p>Manage caregiver profiles</p>
+    </a>
+    
+    <a href="{{ url_for('members_list') }}" class="home-card">
+        <h3>Members</h3>
+        <p>Manage member accounts</p>
+    </a>
+    
+    <a href="{{ url_for('addresses_list') }}" class="home-card">
+        <h3>Addresses</h3>
+        <p>Manage member addresses</p>
+    </a>
+    
+    <a href="{{ url_for('jobs_list') }}" class="home-card">
+        <h3>Jobs</h3>
+        <p>Manage job postings</p>
+    </a>
+    
+    <a href="{{ url_for('job_applications_list') }}" class="home-card">
+        <h3>Job Applications</h3>
+        <p>Manage job applications</p>
+    </a>
+    
+    <a href="{{ url_for('appointments_list') }}" class="home-card">
+        <h3>Appointments</h3>
+        <p>Manage appointments</p>
+    </a>
+</div>
+{% endblock %}
+

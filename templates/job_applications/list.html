@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Job Applications - Caregiver Platform{% endblock %}
+{% block header %}Job Applications{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('job_applications_create') }}" class="btn btn-success">Create New Job Application</a>
+
+<div class="table-container">
+<table>
+    <thead>
+        <tr>
+            <th>Job ID</th>
+            <th>Caregiving Type</th>
+            <th>Caregiver</th>
+            <th>Member</th>
+            <th>Date Applied</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.job_id }}</td>
+            <td>{{ app.required_caregiving_type }}</td>
+            <td>{{ app.caregiver_name }}</td>
+            <td>{{ app.member_name }}</td>
+            <td>{{ app.date_applied or '-' }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('job_applications_delete') }}" style="display:inline;">
+                    <input type="hidden" name="caregiver_user_id" value="{{ app.caregiver_user_id }}">
+                    <input type="hidden" name="job_id" value="{{ app.job_id }}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+

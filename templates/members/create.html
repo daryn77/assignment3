@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Create Member - Caregiver Platform{% endblock %}
+
+{% block content %}
+<div class="form-container">
+<h2 style="font-family: 'Poppins', sans-serif; color: #2c3e50; margin-bottom: 20px;">Create New Member</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>User (must exist in users table) *</label>
+        <select name="member_user_id" required>
+            <option value="">Select a user</option>
+            {% for user in users %}
+            <option value="{{ user.user_id }}">{{ user.user_id }} - {{ user.given_name }} {{ user.surname }} ({{ user.email }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>House Rules</label>
+        <textarea name="house_rules"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Dependent Description</label>
+        <textarea name="dependent_description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('members_list') }}" class="btn">Cancel</a>
+</form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Create Caregiver - Caregiver Platform{% endblock %}
+
+{% block content %}
+<div class="form-container">
+<h2 style="font-family: 'Poppins', sans-serif; color: #2c3e50; margin-bottom: 20px;">Create New Caregiver</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>User (must exist in users table) *</label>
+        <select name="caregiver_user_id" required>
+            <option value="">Select a user</option>
+            {% for user in users %}
+            <option value="{{ user.user_id }}">{{ user.user_id }} - {{ user.given_name }} {{ user.surname }} ({{ user.email }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Photo URL</label>
+        <input type="text" name="photo">
+    </div>
+    <div class="form-group">
+        <label>Gender</label>
+        <select name="gender">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Caregiving Type *</label>
+        <select name="caregiving_type" required>
+            <option value="">Select type</option>
+            <option value="babysitter">Babysitter</option>
+            <option value="Elderly Care">Elderly Care</option>
+            <option value="playmate">Playmate for Children</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Hourly Rate ($) *</label>
+        <input type="number" name="hourly_rate" step="0.01" min="0" required>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('caregivers_list') }}" class="btn">Cancel</a>
+</form>
+</div>
+{% endblock %}
+
