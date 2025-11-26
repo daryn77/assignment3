@@ -10,13 +10,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime, date
+import os
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
 
 # Database connection
 # Use environment variable for production, fallback to local for development
-import os
 DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:123456@localhost/caregiver_platform')
 # Render.com provides DATABASE_URL with postgres://, need to convert to postgresql://
 if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
