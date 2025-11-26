@@ -1,0 +1,258 @@
+================================================================================
+              VIDEO PRESENTATION SCRIPT - CSCI 341 Assignment 3
+                    Online Caregivers Platform (10 minutes)
+================================================================================
+
+INTRODUCTION (30 seconds)
+--------------------------------------------------------------------------------
+"Hello, my name is [YOUR NAME]. This is my video presentation for CSCI 341 
+Assignment 3. I have developed an Online Caregivers Platform that connects 
+caregivers with families seeking caregiving services.
+
+The project consists of three parts:
+- Part 1: Database design in PostgreSQL
+- Part 2: SQL queries using Python and SQLAlchemy  
+- Part 3: A web application with CRUD operations
+
+Let me walk you through each part."
+
+
+================================================================================
+PART 1: DATABASE DESIGN IN PGADMIN (3 minutes)
+================================================================================
+
+[OPEN PGADMIN AND SHOW YOUR DATABASE]
+
+"For Part 1, I created the physical database in PostgreSQL using pgAdmin.
+
+Let me show you the database structure."
+
+[EXPAND YOUR DATABASE -> SCHEMAS -> TABLES]
+
+"I have created 7 tables according to the given schema:
+
+1. USERS table - stores basic user information like email, name, city, phone 
+   number, and password. This is the parent table for both caregivers and members.
+
+2. CAREGIVER table - stores caregiver-specific information like photo, gender, 
+   caregiving type (babysitter, elderly care, or playmate), and hourly rate.
+   The caregiver_user_id is a foreign key referencing the users table.
+
+3. MEMBER table - stores member information including house rules and dependent 
+   description. Members are families looking for caregivers.
+
+4. ADDRESS table - stores the address of members with house number, street, 
+   and town.
+
+5. JOB table - stores job postings by members, including the required caregiving 
+   type, other requirements, and date posted.
+
+6. JOB_APPLICATION table - links caregivers to jobs they applied for, with the 
+   date applied. This has a composite primary key.
+
+7. APPOINTMENT table - stores appointment details including date, time, work 
+   hours, and status (pending, accepted, or declined)."
+
+[CLICK ON EACH TABLE AND SHOW THE DATA - RIGHT CLICK -> VIEW/EDIT DATA -> ALL ROWS]
+
+"Let me show you the data in each table. I have inserted at least 10 records 
+in each table as required.
+
+[Show users table data]
+Here are the users - we have 20 users with their contact information.
+
+[Show caregiver table data]  
+Here are 10 caregivers with different caregiving types and hourly rates.
+
+[Show member table data]
+Here are 10 members looking for caregivers.
+
+[Show job table data]
+Here are the job postings.
+
+[Show appointment table data]
+And here are the appointments with different statuses.
+
+All foreign key relationships are properly defined, ensuring data integrity."
+
+
+================================================================================
+PART 2: SQL QUERIES IN PYTHON (4 minutes)
+================================================================================
+
+[OPEN main.py IN YOUR IDE OR SHOW THE FILE]
+
+"For Part 2, I implemented all the required SQL queries using Python and 
+SQLAlchemy. Let me show you the main.py file."
+
+[SCROLL TO THE TOP OF THE FILE]
+
+"First, I establish a connection to the PostgreSQL database using SQLAlchemy's 
+create_engine and sessionmaker."
+
+[SCROLL TO UPDATE QUERIES SECTION]
+
+"UPDATE QUERIES:
+
+Query 3.1 updates the phone number of Arman Armanov to the specified number.
+
+Query 3.2 adds a commission fee to caregivers - $0.30 if the hourly rate is 
+less than $10, or 10% if it's $10 or more. This uses a CASE statement."
+
+[SCROLL TO DELETE QUERIES SECTION]
+
+"DELETE QUERIES:
+
+Query 4.1 deletes all jobs posted by Amina Aminova. I first delete the related 
+job applications to avoid foreign key violations, then delete the jobs.
+
+Query 4.2 deletes all members living on Kabanbay Batyr street. This also 
+handles cascading deletes for related records in job_application, job, 
+appointment, and address tables."
+
+[SCROLL TO SIMPLE QUERIES SECTION]
+
+"SIMPLE QUERIES:
+
+Query 5.1 selects caregiver and member names for accepted appointments using 
+multiple JOINs.
+
+Query 5.2 lists job IDs containing 'soft-spoken' in other requirements using 
+the LIKE operator.
+
+Query 5.3 lists work hours for all babysitter positions.
+
+Query 5.4 lists members looking for Elderly Care in Astana with 'No pets.' rule."
+
+[SCROLL TO COMPLEX QUERIES SECTION]
+
+"COMPLEX QUERIES:
+
+Query 6.1 counts the number of applicants for each job using multiple JOINs 
+with GROUP BY.
+
+Query 6.2 calculates total hours spent by caregivers for accepted appointments.
+
+Query 6.3 calculates the average pay of caregivers based on accepted appointments.
+
+Query 6.4 finds caregivers who earn above average using a nested subquery."
+
+[SCROLL TO DERIVED ATTRIBUTE SECTION]
+
+"Query 7 calculates the total cost per caregiver by multiplying hourly rate 
+by work hours - this is the derived attribute."
+
+[SCROLL TO VIEW SECTION]
+
+"Query 8 creates a VIEW called job_applications_view that shows all job 
+applications with applicant names and job details."
+
+[RUN THE SCRIPT AND SHOW OUTPUT]
+
+"Let me run the script to show you the results."
+
+[Run: python main.py]
+
+"As you can see, all queries execute successfully and return the expected results."
+
+
+================================================================================
+PART 3: WEB APPLICATION (2-3 minutes)
+================================================================================
+
+[OPEN YOUR BROWSER AND GO TO YOUR RENDER URL]
+
+"For Part 3, I developed a Flask web application with full CRUD functionality 
+for all 7 tables. The application is deployed on Render.com.
+
+Let me show you the application."
+
+[SHOW THE HOME PAGE]
+
+"This is the home page with a navigation sidebar on the left. You can access 
+all 7 tables from here."
+
+[CLICK ON USERS]
+
+"Let me demonstrate the CRUD operations using the Users table.
+
+READ operation - Here you can see all users displayed in a table format with 
+their ID, email, name, city, and phone number."
+
+[CLICK CREATE NEW USER]
+
+"CREATE operation - I can create a new user by filling out this form.
+Let me add a test user..."
+
+[Fill in the form and submit]
+
+"The user is created successfully and appears in the list."
+
+[CLICK UPDATE ON A USER]
+
+"UPDATE operation - I can update any user's information. Let me modify this 
+user's phone number..."
+
+[Make a change and save]
+
+"The update is saved successfully."
+
+[CLICK DELETE ON A USER]
+
+"DELETE operation - I can also delete users. There's a confirmation prompt 
+to prevent accidental deletion."
+
+[Show other tables briefly]
+
+"The same CRUD functionality is available for all other tables:
+- Caregivers
+- Members  
+- Addresses
+- Jobs
+- Job Applications
+- Appointments
+
+Each table has appropriate forms and validations."
+
+[SHOW APPOINTMENTS OR JOBS TABLE]
+
+"For example, in the Appointments table, you can see the caregiver name, 
+member name, date, time, hours, and status. You can create new appointments, 
+update existing ones, or delete them."
+
+
+================================================================================
+CONCLUSION (30 seconds)
+================================================================================
+
+"To summarize, I have successfully completed all three parts of the assignment:
+
+- Part 1: Created the database with 7 tables and proper relationships
+- Part 2: Implemented all required SQL queries in Python
+- Part 3: Built and deployed a web application with full CRUD functionality
+
+All components work together to create a functional Online Caregivers Platform.
+
+Thank you for watching."
+
+================================================================================
+                              END OF SCRIPT
+================================================================================
+
+TIPS FOR RECORDING:
+-------------------
+1. Speak clearly and at a moderate pace
+2. Have all applications open before recording (pgAdmin, IDE, browser)
+3. Zoom in on code when showing specific queries
+4. Keep the video under 10 minutes
+5. Practice once before recording
+6. Make sure your Render site is working before recording Part 3
+
+APPROXIMATE TIMING:
+-------------------
+- Introduction: 0:00 - 0:30
+- Part 1 (pgAdmin): 0:30 - 3:30
+- Part 2 (main.py): 3:30 - 7:30
+- Part 3 (Web App): 7:30 - 9:30
+- Conclusion: 9:30 - 10:00
+
