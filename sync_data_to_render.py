@@ -35,7 +35,8 @@ def get_table_data(session, table_name):
     try:
         result = session.execute(text(f"SELECT * FROM {table_name}"))
         rows = result.fetchall()
-        columns = [desc[0] for desc in result.description]
+        # Get column names from result keys (SQLAlchemy 2.0)
+        columns = list(result.keys())
         return rows, columns
     except Exception as e:
         print(f"❌ Error reading {table_name}: {str(e)}")
